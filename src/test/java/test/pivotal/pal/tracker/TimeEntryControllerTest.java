@@ -34,7 +34,7 @@ public class TimeEntryControllerTest {
                 .when(timeEntryRepository)
                 .create(any(TimeEntry.class));
 
-        ResponseEntity response = controller.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 8));
+        ResponseEntity response = controller.create(new TimeEntry(123L, 456L, LocalDate.parse("2017-01-08"), 80));
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expected);
