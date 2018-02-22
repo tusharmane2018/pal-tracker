@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
-
     private HashMap<Long, TimeEntry> timeEntries = new HashMap<>();
 
     @Override
@@ -16,24 +15,24 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
     }
 
     @Override
-    public TimeEntry find(long id) {
+    public TimeEntry find(Long id) {
         return timeEntries.get(id);
     }
 
     @Override
     public List<TimeEntry> list() {
-        return new ArrayList<TimeEntry>(timeEntries.values());
+        return new ArrayList<>(timeEntries.values());
     }
 
     @Override
-    public TimeEntry update(long id, TimeEntry timeEntry) {
-        timeEntry.setId(id);
+    public TimeEntry update(Long id, TimeEntry timeEntry) {
         timeEntries.replace(id, timeEntry);
+        timeEntry.setId(id);
         return timeEntry;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         timeEntries.remove(id);
     }
 }
