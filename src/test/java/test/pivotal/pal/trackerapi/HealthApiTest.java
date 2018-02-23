@@ -7,8 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +29,17 @@ public class HealthApiTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @LocalServerPort
+    private String port;
 
+    @Before
+    public void setUp(){
+        RestTemplateBuilder builder = new RestTemplateBuilder().
+                rootUri("http://localhost:"+port).
+                basicAuthorization("user","password");
+
+        restTemplate = new TestRestTemplate(builder);
+    }
 
     @Test
     public void healthTest() {
@@ -41,5 +53,7 @@ public class HealthApiTest {
         assertThat(healthJson.read("$.status", String.class)).isEqualTo("UP");
         assertThat(healthJson.read("$.db.status", String.class)).isEqualTo("UP");
         assertThat(healthJson.read("$.diskSpace.status", String.class)).isEqualTo("UP");
+
+
     }
 }
