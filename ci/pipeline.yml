@@ -88,6 +88,7 @@ jobs:
   - get: pal-tracker
     passed: [deploy-review]
   - get: pal-tracker-artifacts
+    trigger: true
     passed: [deploy-review]
   - task: migrate database
     file: pal-tracker/ci/migrateDatabase.yml
@@ -106,4 +107,4 @@ jobs:
       manifest: pal-tracker/manifest-production.yml
       path: pal-tracker-artifacts/pal-tracker-*.jar
       environment_variables:
-WELCOME_MESSAGE: "Hello from the production environment"
+        WELCOME_MESSAGE: "Hello from the production environment"
